@@ -15,122 +15,75 @@ import java.util.Locale;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        String filePath = "data/com-dblp.ungraph.txt";
-        Graph g = new SingleGraph("graphe");
-        FileSourceEdge fs = new FileSourceEdge(true);
-        fs.addSink(g);
-        try {
-            fs.readAll(filePath);
-        } catch (IOException e){
-            e.printStackTrace();
-        }finally {
-            fs.removeSink(g);
+        Graph g = Mesures.readFile("./data/com-dblp.ungraph.txt", "dblp");
+        int nombresNoeud = g.getNodeCount();
+        double degreMoyen = Toolkit.averageDegree(g);
 
-        }
 
         // mesures de bases
         afficheMesures(g);
-        writeDataFile("./data/lineaire/dd_lineaire.dat",g);
-        writeGnuplotFileLineaire("./data/lineaire/dd_lineaire.gnuplot","dd_lineaire.dat", "dd_lineaire.png" ,"dd_lineaire");
-        ExcuteCommande("gnuplot", "dd_lineaire.gnuplot", "./data/lineaire/");
+        //4)
+        //Mesures.writeDataFile("./Result/DBLP/dd_dblp.dat",Mesures.DistributionDegre(g) );
+      /*  Mesures.writeGnuplotFileLineaire("./Result/DBLP/plot_dd_dblp_lin.gnuplot","dd_dblp.dat","dd_dblp_lineaire.png","DBLP lineaire");
+        Mesures.ExcuteCommande("gnuplot", "plot_dd_dblp_lin.gnuplot", "./Result/DBLP/");
+        Mesures.writeGnuplotFileLogLog("./Result/DBLP/plot_dd_dblp_log.gnuplot","dd_dblp.dat","dd_dblp_log.png","DBLP loglog");
+        Mesures.ExcuteCommande("gnuplot", "plot_dd_dblp_log.gnuplot", "./Result/DBLP/");
+*/
 
-        writeDataFile("./data/LogLog/dd_loglog.dat",g);
-        writeGnuplotFileLogLog("./data/LogLog/dd_loglog.gnuplot","dd_loglog.dat", "dd_loglog.png" ,"dd_loglog");
-        ExcuteCommande("gnuplot", "dd_loglog.gnuplot", "./data/LogLog/");
-
-    }
-
-    public static  void afficheMesures (Graph g){
-        int N = g.getNodeCount() ;
-        int nombreArc   = g.getEdgeCount();
-        double degreMoyen =  Toolkit.averageDegree(g);
-        double[] C = Toolkit.clusteringCoefficients(g) ;
-        double CA = degreMoyen /  N ;
-        System.out.println("Nombres de nodes : " + N );
-        System.out.println("Nombres de liens  : " + nombreArc);
-        System.out.println("Degré Moyen : " + degreMoyen);
-        System.out.println("Coefficient de clustering : " + C);
-        System.out.println("Coefficient de clustering d'un Réseau aléatoire : " +  CA);
-        System.out.println("Le graphe est connexe : " + Toolkit.isConnected(g));
-        System.out.println("Un reseau aleatoire de m^ degré moyen  et m^ taile : "  + connecter(degreMoyen,N));
+        //5) distance moyenne
+      //  System.out.println("La distance moyenne : " + Mesures.distanceMoyenne(g, 1000));
+     //   Mesures.writeDataFile("./Result/DBLP/dd.dat", Mesures.distanceDestribution(g, 1000));
+  //      Mesures.writeGnuplotFileLineaire("./Result/DBLP/distance.gnuplot", "dd.dat", "distance.png", "Distance");
+        //  Mesures.ExcuteCommande("gnuplot", "distance.gnuplot", "./Result/DBLP/");
 
 
-    }
+        //6)
+    //    Graph graph1 = Mesures.GenrateRandomGraph(nombresNoeud, degreMoyen);
+     //   afficheMesures(graph1);
 
-    private static boolean connecter(double d,int N){
-        if(d > Math.log(N)){
-            return true;
-        }else{
-            return false;
-        }
-    }
+    //    Mesures.writeDataFile("./Result/Random/dd_random.dat", Mesures.DistributionDegre(graph1));
+    //    Mesures.writeGnuplotFileLogLog("./Result/Random/plot_random_lin.gnuplot", "dd_random.dat", "dd_random_lin.png", "Random");
+      //  Mesures.ExcuteCommande("gnuplot", "plot_random_lin.gnuplot", "./Result/Random/");
 
+     //   Mesures.writeGnuplotFileLogLog("./Result/Random/plot_random_log.gnuplot", "dd_random.dat", "dd_random_log.png", "Random");
+      //  Mesures.ExcuteCommande("gnuplot", "plot_random_log.gnuplot", "./Result/Random/");
+    //    System.out.println("La distance moyenne : " + Mesures.distanceMoyenne(graph1,1000));
+    //    Mesures.writeDataFile("./Result/Random/dd_distance_random.dat",Mesures.distanceDestribution(graph1,1000));
+   //     Mesures.writeGnuplotFileLineaire("./Result/Random/distance.gnuplot", "dd_distance_random.dat", "distance.png", "Distance");
+      //  Mesures.ExcuteCommande("gnuplot", "distance.gnuplot", "./Result/Random/");
 
+        Graph graph2 = Mesures.GenetatePreferencielGraph(nombresNoeud,degreMoyen);
+         afficheMesures(graph2);
+         Mesures.writeDataFile("./Result/Perferenciel/dd_perferenciel.dat",Mesures.DistributionDegre(graph2));
+        Mesures.writeGnuplotFileLineaire("./Result/Perferenciel/plot_perferenciel_lin.gnuplot","dd_perferenciel.dat","dd_perferenciel_lin.png","Perferenciel");
+      //  Mesures.ExcuteCommande("gnuplot", "plot_perferenciel_lin.gnuplot", "./Result/Perferenciel/");
 
-    private static void writeDataFile(String filename , Graph g ){
-        int[] dd =  Toolkit.degreeDistribution(g);
-        try {
-            FileWriter fw = new FileWriter(filename);
+        Mesures.writeGnuplotFileLogLog("./Result/Perferenciel/plot_perferenciel_log.gnuplot","dd_perferenciel.dat","dd_perferenciel_log.png","Perferenciel");
+    //    Mesures.ExcuteCommande("gnuplot", "plot_perferenciel_log.gnuplot", "./Result/Perferenciel/");
+           Mesures.writeDataFile("./Result/Perferenciel/dd_distance_perferenciel.dat",Mesures.distanceDestribution(graph2,1000));
+        Mesures.writeGnuplotFileLineaire("./Result/Perferenciel/distance.gnuplot","dd_distance_perferenciel.dat","distance_perferenciel.png","distance_perferenciel");
+      //  Mesures.ExcuteCommande("gnuplot", "distance.gnuplot", "./Result/Perferenciel/");
 
-            for (int i = 0; i < dd.length; i++)
-                if (dd[i] !=0) fw.write(String.format(Locale.US, "%6d%20.8f%n", i, (double) dd[i] /g.getNodeCount()));
-            fw.flush();
-            fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
-    public static void writeGnuplotFileLineaire(String path,String nameData ,String GraphPngName ,String title){
-        try {
-            FileWriter fw = new FileWriter(path);
-            fw.write("set terminal png  \n"
-                    + "set title \""+title+"\"\n"
-                    + "set xlabel 'k' \n"
-                    + "set ylabel 'p(k)' \n"
-                    + "set output '"+GraphPngName+"' \n"
-                    + "plot '"+nameData+"' title '"+title+"' with lines ls 1 "
-            );
-            fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public static void writeGnuplotFileLogLog(String path,String nameData ,String GraphPngName ,String title){
-        try {
-            FileWriter fw = new FileWriter(path);
-            fw.write("set terminal png  \n"
-                    + "set title \""+title+"\"\n"
-                    + "set xlabel 'k' \n"
-                    + "set ylabel 'p(k)' \n"
-                    + "set output '"+GraphPngName+"' \n"
-                    + "set logscale xy\n"
-                    + "set yrange [1e-6:1]\n"
+    private static void afficheMesures(Graph graph) {
+        System.out.println("Affichage des mesures Graphe : " + graph.getId());
+        int NombreNoeuds = graph.getNodeCount();
+        System.out.println("Nombres de noeuds: " + NombreNoeuds);
+        int NombreLiens = graph.getEdgeCount();
+        System.out.println("Nombres de liens: " + NombreLiens);
+        System.out.println("Degré moyen d'un graphe aléatoire: " + Mesures.DegreMoyenAlea(graph));
+        double degreMoyen = Toolkit.averageDegree(graph);
+        System.out.println("Degré moyen en utilisant Toolkit : " + degreMoyen);
 
-                    +  "# Poisson\n"
-                    + "lambda = 6.62208890914917\n"
-                    + "poisson(k) = lambda ** k * exp(-lambda) / gamma(k + 1)\n"
-                    + "f(x) = lc - gamma * x  \n"
-                    + "fit f(x) '" + nameData + "' using (log($1)):(log($2)) via lc, gamma \n"
-                    + "c = exp(lc) \n"
-                    +"power(k) = c *k ** (-gamma) \n"
-                    + "plot '"+nameData+"' title '"+title+"', poisson(x) title 'Poisson law' , power(x) title 'Power law'"
-            );
-            fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    public static void ExcuteCommande(String commande, String name, String pathDir) {
-        try {
-            // Execute command
-            ProcessBuilder p = new ProcessBuilder(commande, name);
-            p.directory(new File(pathDir));
-            p.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.out.println("coefficient de clustering moyen en utilisant Toolkit : " + Toolkit.averageClusteringCoefficient(graph));
+        System.out.println("coefficient de clustering d'un réseau aléatoire : ");
+        System.out.printf(Locale.US, "%6d%20.8f%n", 1, Mesures.CoefficientClustering(degreMoyen, NombreNoeuds));
+        //1) est-il  un réseau connexe : Oui
+        System.out.println("Le graphe est-il connexe : " + Toolkit.isConnected(graph));
+        System.out.println("------------------------------\n");
+
     }
 
 

@@ -1,0 +1,36 @@
+
+
+*******************************************************************************
+Tue Dec 20 20:04:10 2022
+
+
+FIT:    data read from 'dd_perferenciel.dat' using (log($1)):(log($2))
+        format = x:z
+        #datapoints = 341
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+	f(x) = lc - gamma * x
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   lc            gamma        
+   0 1.5697410521e+04   0.00e+00  3.69e+00    1.000000e+00   1.000000e+00
+   3 2.8781695359e+02  -7.47e-02  3.69e-03   -1.882465e-01   2.086225e+00
+
+After 3 iterations the fit converged.
+final sum of squares of residuals : 287.817
+rel. change during last iteration : -7.47377e-07
+
+degrees of freedom    (FIT_NDF)                        : 339
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.921421
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.849018
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+lc              = -0.188246        +/- 0.2245       (119.2%)
+gamma           = 2.08623          +/- 0.04386      (2.102%)
+
+correlation matrix of the fit parameters:
+                lc     gamma  
+lc              1.000 
+gamma           0.975  1.000 

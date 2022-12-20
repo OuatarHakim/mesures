@@ -1,10 +1,11 @@
 
 
+
 *******************************************************************************
-Wed Nov 30 11:39:14 2022
+Tue Dec 20 19:15:50 2022
 
 
-FIT:    data read from 'dd_loglog.dat' using (log($1)):(log($2))
+FIT:    data read from 'dd_dblp.dat' using (log($1)):(log($2))
         format = x:z
         #datapoints = 199
         residuals are weighted equally (unit weight)
