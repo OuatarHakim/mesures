@@ -123,3 +123,29 @@ Distance     :
 On utilise ce [script](./Result/Perferenciel/distance.gnuplot) pour tracer la distribution  des distances .
 
 ![distribution des distances](./Result/Perferenciel/distance_perferenciel.png)    
+
+
+### Propagation :  
+
+Les consignes sont les mêmes que pour le premier TP. On travaille sur les mêmes données et la problématique est proche. ([SNAP](https://snap.stanford.edu/data/com-DBLP.html))
+
+Nos collaborateurs scientifiques communiquent souvent par mail. Malheureusement pour eux, les pièces jointes de ces mails contiennent parfois des virus informatiques. On va étudier la propagation d'un virus avec les hypothèses suivantes :
+
+- Un individu envoie en moyenne un mail par semaine à chacun de ses collaborateurs.
+- Un individu met à jour son anti-virus en moyenne deux fois par mois. Cela nettoie son système mais ne le protège pas de nouvelles infections car le virus mute.
+- L'épidémie commence avec un individu infecté (patient zéro).
+
+1. Quel est le taux de propagation du virus ?
+
+   On a $` \beta = \frac{1}{7} `$ pour la probabilité de contaminer un collaborateur et $`\mu = \frac{1}{14}`$ pour la probabilité de mettre à jour son anti-virus.
+
+   De ce fait, le taux de propagation $`\lambda = \frac{\beta}{\mu} = 2`$
+
+2. Quel est le seuil épidémique du réseau ?
+
+   On peut avoir le seuil avec $`\lambda c = \frac{\langle k \rangle}{\langle k^2 \rangle}`$ où $`\langle k \rangle = 6.622`$ et $`\langle k^2 \rangle = 144,631`$ qui vaut $`\lambda c \approx 0.046`$.
+
+3. Comparez avec le seuil théorique d'un réseau aléatoire du même degré moyen.
+
+   Le seuil épidémique d'un réseau aléatoire au même degré moyen serait $`\lambda c = \frac{1}{\langle k \rangle + 1} \approx 0.131`$.  
+   Cette différence entre les seuils épidémique est dûe à la divergence du degré de clustering.
