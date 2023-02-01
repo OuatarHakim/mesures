@@ -13,23 +13,24 @@ public class Simulation {
     public static void main(String[] args) {
         Graph g = Mesures.readFile("./data/com-dblp.ungraph.txt", "dblp");
         Propagation propagation = new Propagation(g);
-        propagation.Scenario1();
+     /*   propagation.Scenario1();
         writeDataFile("./Result/Propagation/propagationS1.dat",propagation.getPercent());
-        writeGnuplotFile("./Result/Propagation/S1.gnuplot","propagationS1.dat","S1.png","s1");
 
-
-
+        propagation.Scenario3();
+        writeDataFile("./Result/Propagation/propagationS3.dat",propagation.getPercent());
+*/
 
 
     }
 
-    public static void writeDataFile(String filename, ArrayList<Double> data) {
+    public static void writeDataFile(String filename, double[] data) {
+
 
         try {
             FileWriter fw = new FileWriter(filename);
 
-            for (int i = 0; i < data.size(); i++)
-               if(data.get(i) >  0 )fw.write(String.format(Locale.US, "%6d%20.8f%n", i, (double) data.get(i)));
+            for (int i = 0; i < data.length; i++)
+               if(data[i] >  0 )fw.write(String.format(Locale.US, "%6d%20.8f%n", i, data[i]));
 
             fw.flush();
             fw.close();

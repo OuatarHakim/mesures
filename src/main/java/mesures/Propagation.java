@@ -5,10 +5,7 @@ import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Propagation {
@@ -19,7 +16,7 @@ public class Propagation {
      private double mu = 1/14D;
      private int days  = 84;
 
-     private ArrayList<Double> percent = new ArrayList<>() ;
+     private double[] percent = new double[84]  ;
      public Propagation(Graph graph) {
          this.graph = graph;
      }
@@ -37,14 +34,14 @@ public class Propagation {
      }
 
 
-
+/*
      public void scenario1(){
 
          this.graph.nodes().forEach(n -> {
              this.lesSusceptibles.add(n);
          });
 
-         initStat();
+
          Node p0 = firstPatient();
          this.infected.add(p0);
          int day = 1;
@@ -79,45 +76,53 @@ public class Propagation {
 
 
 
-     }
+     }*/
      public void Scenario1(){
 
          this.graph.nodes().forEach(n -> {
              this.lesSusceptibles.add(n);
          });
 
-         initStat();
+
          Node p0 = firstPatient();
          this.infected.add(p0);
          int day = 0;
-         while(day <= this.days) {
+         int count = this.graph.getNodeCount();
+         while(day < this.days) {
              //creation d'une liste tmp afin d'éviter l'erreur  ConcurrentModificationException
-             ArrayList<Node> tmp = new ArrayList<>(this.infected);
+
+             ArrayList<Node> tmp  = new ArrayList<>( this.infected);
              tmp.forEach(this::infecter);
 
-             this.percent.add(day, (double) (this.infected.size() +1 / this.graph.getNodeCount()));
+             this.percent[day] = (double) this.infected.size()  /count ;
+             //this.percent.add(day, (double) (tmp.size()+1 / count));
              day++;
+             tmp.clear();
          }
          this.infected.clear();
          this.lesSusceptibles.clear();
 
+
      }
 
      public void Scenario2(){
-         this.lesSusceptibles = (ArrayList<Node>) Toolkit.randomNodeSet(this.graph, (this.graph.getNodeCount() / 2));
+         int count = this.graph.getNodeCount();
+
+         this.lesSusceptibles = (ArrayList<Node>) Toolkit.randomNodeSet(this.graph, (count / 2));
          Random rand = new Random();
          Node p0 = this.lesSusceptibles.get(rand.nextInt(this.lesSusceptibles.size()));
          this.infected.add(p0);
 
-
          int day = 0;
-         while(day <= this.days) {
+         while(day < this.days) {
              //creation d'une liste tmp afin d'éviter l'erreur  ConcurrentModificationException
              ArrayList<Node> tmp = new ArrayList<>(this.infected);
              tmp.forEach(this::infecter);
-
-             this.percent.add(day, (double) (this.infected.size()  / this.graph.getNodeCount()));
+             this.percent[day] = (double) this.infected.size()  /count ;
+             //this.percent.add(day, (double) (tmp.size()+1 / count));
              day++;
+             tmp.clear();
+
          }
          this.infected.clear();
          this.lesSusceptibles.clear();
@@ -127,6 +132,42 @@ public class Propagation {
 
 
      public void Scenario3(){
+         int count = this.graph.getNodeCount();
+
+         ArrayList<Node> groupe0 = (ArrayList<Node>) Toolkit.randomNodeSet(this.graph,(count /2));
+         ArrayList<Node> groupe1 = new ArrayList<>();
+
+        for(Node node : groupe0){
+            Edge e  =Toolkit.randomEdge(node);
+            if(e != null) {
+                Node opposite = e.getOpposite(node);
+                groupe1.add(opposite);
+            }
+        }
+         this.graph.nodes().forEach(n -> {
+
+             this.lesSusceptibles.add(n);
+         });
+
+        this.lesSusceptibles.removeAll(groupe1);
+         Random rand = new Random();
+         Node p0 = this.lesSusceptibles.get(rand.nextInt(this.lesSusceptibles.size()));
+         this.infected.add(p0);
+         int day = 0;
+         while(day < this.days) {
+             //creation d'une liste tmp afin d'éviter l'erreur  ConcurrentModificationException
+
+             ArrayList<Node> tmp  = new ArrayList<>( this.infected);
+             tmp.forEach(this::infecter);
+
+             this.percent[day] = (double) this.infected.size()  /count ;
+             //this.percent.add(day, (double) (tmp.size()+1 / count));
+             day++;
+             tmp.clear();
+         }
+         this.infected.clear();
+         this.lesSusceptibles.clear();
+
 
      }
      public void infecter(Node node){
@@ -148,7 +189,7 @@ public class Propagation {
          }
      }
 
-     public ArrayList<Double> getPercent(){
+     public double[] getPercent(){
          return this.percent;
 
      }

@@ -149,3 +149,14 @@ Nos collaborateurs scientifiques communiquent souvent par mail. Malheureusement 
 
    Le seuil épidémique d'un réseau aléatoire au même degré moyen serait $`\lambda c = \frac{1}{\langle k \rangle + 1} \approx 0.131`$.  
    Cette différence entre les seuils épidémique est dûe à la divergence du degré de clustering.
+  
+Simulez la propagation du virus jour par jour pendant trois mois avec les scénarios suivants :
+
+- On ne fait rien pour empêcher l'épidémie
+- On réussit à convaincre 50 % des individus de mettre à jour en permanence leur anti-virus (immunisation aléatoire)
+- On réussit à convaincre 50 % des individus de convaincre un de leurs contacts de mettre à jour en permanence son anti-virus (immunisation sélective).
+
+4. Pour chacun des trois scénarios, tracez l'évolution de la fraction d'infectés de la population non immunisée.
+
+
+![Distribution](/Result/Propagation/Scenario.png)
