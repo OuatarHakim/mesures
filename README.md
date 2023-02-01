@@ -160,3 +160,37 @@ Simulez la propagation du virus jour par jour pendant trois mois avec les scéna
 
 
 ![Distribution](/Result/Propagation/Scenario.png)
+
+5. On peut conclure que l'immunisation aléatoire diminue la propagation de virus jusqu'au 30%   et l'immunisation selective diminue la 
+propagation jusqu'à 10 %( une difference de 70% entre la propagation sans rien faire et l'immunisation sélective)
+
+
+6. Pour justifier l'efficacité de l'immunisation sélective, calculez le degré moyen des groupes 0 et 1. Comment expliquez-vous la différence ?
+   $`\langle k \rangle (0) = 6.60`$
+ 
+   $`\langle k \rangle (1) = 18,50`$
+   La difference s'explique par une présence nettement superieur de hubs dans le groupe 1,
+   donc une grande probabilité d'etre immunisé par les voisins.
+
+   
+7.  Du point de vue du virus l'immunisation d'un nœud est équivalente à sa suppression du réseau. Calculez le seuil épidémique du réseau modifié pour chacune des deux stratégies d'immunisation et comparez avec le seuil épidémique du réseau initial.
+
+    $`\lambda c(aléatoire) \approx 0,045985`$\
+    $`\lambda c(sélective) \approx 0,092594`$
+
+    Pour le réseau aléatoire, le seuil épidémique est approximativement égal à celui du réseau initial car la taille du réseau n'a pas d'influence sur son seuil épidémique.
+    Alors que le réseau sélectif a un seuil épidémique environ deux fois plus grand que les autres. On peut justifier cela par le fait qu'un grand nombre de hub soient retirés du réseau et donc limite la propagation.
+
+8. Simulez l'épidémie avec les mêmes hypothèses et les mêmes scénarios dans un réseau aléatoire et un réseau généré avec la méthode d'attachement préférentiel de la même taille et le même degré moyen. Comparez et commentez les résultats.
+#### Réseau Aléatoire  
+![infections](/Result/Propagation/Aleatoire/Scenario.png)
+
+#### Réseau Perferentiel
+
+
+![infections](/Result/Propagation/Preferentiel/Scenario.png)
+
+Dans les 2 réseaux , on remarque que dans le  scénario 1 l'évolution de l'infection se stabilise presque à la même valeur ,et aussi elle atteinte plus rapidement dans le réseau Perferentiel.
+
+et dans le réseau aléatoire on remarque que les scénarios 2 et 3 évolue de maniére logique .
+et le réseau perferentiel ,on remarque que les scénarios 2 et 3 , l'évolution se stabilise à la même valeur . 
